@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Optional, TYPE_CHECKING
 
 import tcod.event
@@ -18,7 +20,7 @@ class EventHandler(tcod.event.EventDispatch[Action]):
             if action is None:
                 continue
 
-            action.perform(self.engine, self.engine.player)
+            action.perform()
 
             self.engine.handle_enemy_turns()
             self.engine.update_fov() # Update the FOV before the players next action.
