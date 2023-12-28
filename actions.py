@@ -78,6 +78,8 @@ class ItemAction(Action):
         """Invoke the items ability, this action will be given to provide context."""
         if self.item.consumable:
             self.item.consumable.activate(self)
+        if self.item.ability:
+            self.item.ability.activate(self)
 
 
 class DropItem(ItemAction):

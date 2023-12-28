@@ -1,5 +1,5 @@
 from components.ai import HostileEnemy
-from components import consumable, equippable
+from components import consumable, equippable, ability
 from components.equipment import Equipment
 from components.fighter import Fighter
 from components.inventory import Inventory
@@ -88,4 +88,29 @@ chain_mail = Item(
     color=(139, 69, 19),
     name="Chain Mail",
     equippable=equippable.ChainMail(),
+)
+
+confusion_ability = Item(
+    char="*",
+    color=(207, 63, 255),
+    name="Confusion Ability",
+    ability=ability.ConfusionAbility(number_of_turns=10, cooldown_turns=5),
+)
+fireball_ability = Item(
+    char="*",
+    color=(255, 0, 0),
+    name="Fireball Ability",
+    ability=ability.FireballDamageAbility(damage=25, radius=3, cooldown_turns=5),
+)
+healing_ability = Item(
+    char="*",
+    color=(0, 255, 0),
+    name="Healing Ability",
+    ability=ability.HealingAbility(amount=2, cooldown_turns=5),
+)
+lightning_ability = Item(
+    char="*",
+    color=(255, 255, 0),
+    name="Lightning Ability",
+    ability=ability.LightningDamageAbility(damage=40, maximum_range=5, cooldown_turns=5),
 )

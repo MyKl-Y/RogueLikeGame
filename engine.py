@@ -12,7 +12,7 @@ from message_log import MessageLog
 import render_functions
 
 if TYPE_CHECKING:
-    from entity import Actor
+    from entity import Actor, Item
     from game_map import GameMap, GameWorld
 
 

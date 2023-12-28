@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from components.consumable import Consumable
     from components.equipment import Equipment
     from components.equippable import Equippable
+    from components.ability import Ability
     from components.fighter import Fighter
     from components.inventory import Inventory
     from components.level import Level
@@ -141,6 +142,7 @@ class Item(Entity):
         name: str = "<Unnamed>",
         consumable: Optional[Consumable] = None,
         equippable: Optional[Equippable] = None,
+        ability: Optional[Ability] = None,
     ):
         super().__init__(
             x=x,
@@ -161,3 +163,8 @@ class Item(Entity):
 
         if self.equippable:
             self.equippable.parent = self
+
+        self.ability = ability
+        
+        if self.ability:
+            self.ability.parent = self

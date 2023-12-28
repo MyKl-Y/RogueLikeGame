@@ -18,7 +18,7 @@ import input_handlers
 
 
 # Load the background image and remove the alpha channel.
-background_image = tcod.image.load("menu_background.png")[:, :, :3]
+background_image = tcod.image.load("menu_background_4.png")[:, :, :3]
 
 
 def new_game() -> Engine:
@@ -52,15 +52,22 @@ def new_game() -> Engine:
 
     dagger = copy.deepcopy(entity_factories.dagger)
     leather_armor = copy.deepcopy(entity_factories.leather_armor)
+    ability = copy.deepcopy(entity_factories.fireball_ability)
+    heal = copy.deepcopy(entity_factories.healing_ability)
 
     dagger.parent = player.inventory
     leather_armor.parent = player.inventory
+    ability.parent = player.inventory
+    heal.parent = player.inventory
 
     player.inventory.items.append(dagger)
     player.equipment.toggle_equip(dagger, add_message=False)
 
     player.inventory.items.append(leather_armor)
     player.equipment.toggle_equip(leather_armor, add_message=False)
+
+    player.inventory.items.append(ability)
+    player.inventory.items.append(heal)
 
     return engine
 
@@ -83,7 +90,7 @@ class MainMenu(input_handlers.BaseEventHandler):
         console.print(
             console.width // 2,
             console.height // 2 - 4,
-            "TOMBS OF THE ANCIENT KINGS",
+            "Shogun's Echo: Path of the Ronin",
             fg=color.menu_title,
             alignment=libtcodpy.CENTER,
         )

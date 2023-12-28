@@ -137,6 +137,12 @@ class EventHandler(BaseEventHandler):
             return MainGameEventHandler(self.engine) # Return to the main handler.
         return self
 
+    def update_ability_cooldowns(self):
+        """Update all ability cooldowns."""
+        for item in self.engine.player.inventory.items:
+            if hasattr(item, 'ability') and item.ability:
+                item.ability.cooldown()
+
     def handle_action(self, action: Optional[Action]) -> bool:
         """Handle actions returned from event methods.
         
@@ -152,16 +158,20 @@ class EventHandler(BaseEventHandler):
             return False # Skip enemy turn on exceptions.
         
         self.engine.handle_enemy_turns()
+        self.update_ability_cooldowns()
 
         self.engine.update_fov() # Update the FOV before the players next action.
         return True
+    
+
 
     def ev_mousemotion(self, event: tcod.event.MouseMotion) -> None:
         if self.engine.game_map.in_bounds(event.tile.x, event.tile.y):
             self.engine.mouse_location = event.tile.x, event.tile.y
     
-    def on_render(self, console: tcod.Console) -> None:
+    def on_render(self, console: tcod.console.Console) -> None:
         self.engine.render(console)
+
 
 class AskUserEventHandler(EventHandler):
     """Handles user input for actions which require special input."""
@@ -317,7 +327,7 @@ class InventoryEventHandler(AskUserEventHandler):
 
     TITLE = "<missing title>"
 
-    def on_render(self, console: tcod.Console) -> None:
+    def on_render(self, console: tcod.console.Console) -> None:
         """Render an inventory menu, which displays the items in the inventory.
         
         Allows the user to select an item using the letter keys, and returns an
@@ -399,8 +409,10 @@ class InventoryActivateHandler(InventoryEventHandler):
         if item.consumable:
             # Return the action for the selected item.
             return item.consumable.get_action(self.engine.player)
-        elif item.equipment:
+        elif item.equippable:
             return actions.EquipAction(self.engine.player, item)
+        elif item.ability:
+            return item.ability.get_action(self.engine.player)
         else:
             return None
 
