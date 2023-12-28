@@ -29,7 +29,8 @@ class Action:
         This method must be overridden by Action subclasses.
         """
         raise NotImplementedError()
-    
+
+
 class PickupAction(Action):
     """Pickup an item and add it to the inventory, if there is room for it."""
 
@@ -57,6 +58,7 @@ class PickupAction(Action):
 
         raise exceptions.Impossible("There is nothing here to pick up.")
 
+
 class ItemAction(Action):
     def __init__(
             self, entity: Actor, item: Item, target_xy: Optional[Tuple[int, int]] = None
@@ -74,11 +76,27 @@ class ItemAction(Action):
     
     def perform(self) -> None:
         """Invoke the items ability, this action will be given to provide context."""
-        self.item.consumable.activate(self)
+        if self.item.consumable:
+            self.item.consumable.activate(self)
+
 
 class DropItem(ItemAction):
     def perform(self) -> None:
+        if self.entity.equipment.item_is_equipped(self.item):
+            self.entity.equipment.toggle_equip(self.item)
+
         self.entity.inventory.drop(self.item)
+
+
+class EquipAction(Action):
+    def __init__(self, entity: Actor, item: Item):
+        super().__init__(entity)
+
+        self.item = item
+    
+    def perform(self) -> None:
+        self.entity.equipment.toggle_equip(self.item)
+
 
 class WaitAction(Action):
     def perform(self) -> None:
@@ -123,7 +141,8 @@ class ActionWithDirection(Action):
     
     def perform(self) -> None:
         raise NotImplementedError()
-    
+
+
 class MeleeAction(ActionWithDirection):
     def perform(self) -> None:
         target = self.target_actor
@@ -148,6 +167,7 @@ class MeleeAction(ActionWithDirection):
                 f"{attack_desc} but does no damage.", attack_color
             )
 
+
 class MovementAction(ActionWithDirection):
     def perform(self) -> None:
         dest_x, dest_y = self.dest_xy
@@ -163,6 +183,7 @@ class MovementAction(ActionWithDirection):
             raise exceptions.Impossible("That way is blocked.")
 
         self.entity.move(self.dx, self.dy)
+
 
 class BumpAction(ActionWithDirection):
     def perform(self) -> None:
