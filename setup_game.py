@@ -50,24 +50,21 @@ def new_game() -> Engine:
         "Hello and welcome, adventurer, to yet another dungeon!", color.welcome_text
     )
 
-    dagger = copy.deepcopy(entity_factories.dagger)
-    leather_armor = copy.deepcopy(entity_factories.leather_armor)
-    ability = copy.deepcopy(entity_factories.fireball_ability)
-    heal = copy.deepcopy(entity_factories.healing_ability)
+    wrapped_fists = copy.deepcopy(entity_factories.wrapped_fists)
+    cloth_armor = copy.deepcopy(entity_factories.cloth_armor)
+    ability = copy.deepcopy(entity_factories.bow)
 
-    dagger.parent = player.inventory
-    leather_armor.parent = player.inventory
+    wrapped_fists.parent = player.inventory
+    cloth_armor.parent = player.inventory
     ability.parent = player.inventory
-    heal.parent = player.inventory
 
-    player.inventory.items.append(dagger)
-    player.equipment.toggle_equip(dagger, add_message=False)
-
-    player.inventory.items.append(leather_armor)
-    player.equipment.toggle_equip(leather_armor, add_message=False)
-
+    player.inventory.items.append(wrapped_fists)
+    player.inventory.items.append(cloth_armor)
     player.inventory.items.append(ability)
-    player.inventory.items.append(heal)
+
+    player.equipment.toggle_equip(wrapped_fists, add_message=False)
+    player.equipment.toggle_equip(cloth_armor, add_message=False)
+
 
     return engine
 
