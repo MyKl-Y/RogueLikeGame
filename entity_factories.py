@@ -346,7 +346,7 @@ confusion_ability = Item(
     char="*",
     color=(54, 40, 113),
     name="Evoke Blindness",
-    ability=ability.ConfusionAbility(number_of_turns=10, cooldown_turns=5),
+    ability=ability.ConfusionAbility(number_of_turns=15, cooldown_turns=5),
 )
 fireball_ability = Item(
     char="*",
@@ -370,37 +370,37 @@ shuriken = Item(
     char="*",
     color=(160, 160, 160),
     name="Shuriken",
-    ability=ability.LightningDamageAbility(damage=7, maximum_range=4, cooldown_turns=0),
+    ability=ability.Shuriken(damage=7, maximum_range=4, cooldown_turns=0),
 )
 kunai = Item(
     char="*",
     color=(130, 160, 190),
     name="Kunai",
-    ability=ability.LightningDamageAbility(damage=10, maximum_range=4, cooldown_turns=0),
+    ability=ability.Kunai(damage=10, maximum_range=4, cooldown_turns=0),
 )
 bow = Item(
     char="*",
     color=(130, 160, 190),
     name="Bow",
-    ability=ability.LightningDamageAbility(damage=15, maximum_range=7, cooldown_turns=1),
+    ability=ability.Bow(damage=15, maximum_range=7, cooldown_turns=1),
 )
 black_hole = Item(
     char="*",
     color=(0, 0, 0),
     name="Black Hole",
-    ability=ability.FireballDamageAbility(damage=100, radius=7, cooldown_turns=20),
+    ability=ability.Blackhole(damage=100, radius=7, cooldown_turns=20),
 )
 solar_flare = Item(
     char="*",
     color=(255, 0, 0),
-    name="Solar Flare",
-    ability=ability.LightningDamageAbility(damage=30, maximum_range=7, cooldown_turns=5),
+    name="Ruby Flare",
+    ability=ability.SolarFlare(damage=30, maximum_range=7, cooldown_turns=5),
 )
 star_rage = Item(
     char="*",
     color=(125, 0, 255),
     name="Star Rage",
-    ability=ability.FireballDamageAbility(damage=20, radius=5, cooldown_turns=5),
+    ability=ability.StarRage(damage=20, radius=5, cooldown_turns=5),
 )
 
 
