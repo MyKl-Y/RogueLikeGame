@@ -5,7 +5,7 @@ from typing import Tuple, TYPE_CHECKING
 import color
 
 if TYPE_CHECKING:
-    from tcod import Console
+    from tcod.console import Console
     from engine import Engine
     from game_map import GameMap
 
@@ -35,7 +35,7 @@ def render_bar(
 
     console.print(
         x=1, y=45, string=f"HP: {current_value}/{maximum_value}", fg=color.bar_text
-)
+    )
 
 def render_dungeon_level(
     console: Console, dungeon_level: int, location: Tuple[int, int]
